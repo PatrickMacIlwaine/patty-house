@@ -1,6 +1,4 @@
 config.json
 package-lock.json
 node_modules/
-.envnode_modules/
-node_modules/
-node_modules/
+.env
