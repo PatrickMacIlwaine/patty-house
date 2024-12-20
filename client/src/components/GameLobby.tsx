@@ -2,6 +2,8 @@ import React from 'react';
 import { useWebSocket } from '../hooks/useWebSocket';
 import { useParams, useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
+import ErrorComponent from './ErrorComponent';
+import PreStartPage from './PreStartPage';
 
 
 
@@ -18,11 +20,25 @@ export default function GameLobby() {
       REACT_APP_WS
     );
 
+    if (!lobbyCode) {
+      navigate("/");
+      return <div>Invalid lobby code, redirecting...</div>;
+    }
 
+    if (error) {
+    return (
+      <ErrorComponent
+      error={error}
+    />)
+    }
+    
+    return (
+      <PreStartPage
+        gameState={gameState}
+        ws={ws}
+        sendMessage={sendMessage}
+        lobbyCode={lobbyCode}
+      />
+    );
 
-    return ( 
-        <div>
-            You are now in a lobby. 
-        </div>
-    )
 }
