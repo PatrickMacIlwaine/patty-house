@@ -27,9 +27,6 @@ export default function StartNewGameModal({ onClose }: StartNewGameModalProps) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          playerCount,
-          streamerMode,
-          timeConstraint,
         }),
       });
       const data = await response.json();
@@ -60,47 +57,6 @@ export default function StartNewGameModal({ onClose }: StartNewGameModalProps) {
 
         <div className="mt-4">
           <p className="text-gray-700">Configure your game settings here.</p>
-
-          <div className="mb-4 p-4">
-            <div className="flex items-center p-2">
-              <label className="mr-2">Streamer Mode:</label>
-              <input
-                type="checkbox"
-                checked={streamerMode}
-                onChange={(e) => setStreamerMode(e.target.checked)}
-                className="p-2 border rounded size-5 hover:backdrop:blue-"
-              />
-            </div>
-            <div className="flex items-center p-2">
-              <label className="mr-2">Time per Round:</label>
-              <select
-                value={timeConstraint}
-                onChange={(e) => setTimeConstraint(parseInt(e.target.value, 10))}
-                className="p-2 border rounded"
-              >
-                {[1, 2, 3, 4, 5].map((number) => (
-                  <option key={number} value={number}>
-                    {number}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="flex items-center p-2">
-              <label className="mr-2">Number of Players:</label>
-              <select
-                value={playerCount}
-                onChange={(e) => setPlayerCount(parseInt(e.target.value, 10))}
-                className="p-2 border rounded"
-              >
-                {[2, 3, 4].map((number) => (
-                  <option key={number} value={number}>
-                    {number}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
         </div>
 
         <div className="mt-6 flex justify-end space-x-4">

@@ -1,14 +1,21 @@
-import { Request, Response } from "express";
-import { createLobby } from "./lobbyService";
+import { Request, Response } from 'express';
+import { createLobby } from './lobbyService';
 
 export const createLobbyHandler = (req: Request, res: Response) => {
-  const { playerCount, streamerMode, timeConstraint } = req.body;
+  try {
+    const { timeConstraint } = req.body;
 
-  const lobbyCode = createLobby({
-    playerCount,
-    streamerMode,
-    timeConstraint,
-  });
+    if (timeConstraint !== undefined && typeof timeConstraint !== 'number') {
+      return res
+        .status(400)
+        .json({ error: 'timeConstraint must be a number if provided' });
+    }
 
-  res.json({ lobbyCode });
+    const lobbyCode = createLobby();
+
+    return res.status(201).json({ lobbyCode });
+  } catch (error) {
+    console.error('Error creating lobby:', error);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
 };
